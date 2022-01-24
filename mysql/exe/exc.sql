@@ -19,6 +19,11 @@ create table member2menber (
     
     -- 테이블삭제
     
+    drop table menber2;
+    drop table menber;
+    drop table member2;
+    drop table member;
+    
     
 
 
