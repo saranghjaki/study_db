@@ -9,3 +9,5 @@ seq int,
     writerbooks varchar(100),
     price int
 );
+
+ drop table books;
