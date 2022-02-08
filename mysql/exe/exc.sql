@@ -10,7 +10,7 @@ create table member (
     regdate datetime
     );
     
-create table member2menber (
+create table member2 (
 	seq int,
     name varchar(100),
     id varchar(100),
@@ -19,11 +19,9 @@ create table member2menber (
     
     -- 테이블삭제
     
-    drop table menber2;
+	  drop table menber2;
     drop table menber;
     drop table member2;
     drop table member;
     
-    
-
-
+ 
