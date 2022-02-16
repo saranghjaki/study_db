@@ -131,8 +131,8 @@ coment
  a.name
  , b.coment
  from book9 a
--- left join review9 b on b.book9_no = a.no
-  inner  join review9 b on b.book9_no = a.no
+-- left join review9 b on b.book9_no = a.no;
+ inner  join review9 b on b.book9_no = a.no
   
  ;
  

@@ -12,7 +12,8 @@ create table member (
     
 create table member2 (
 	seq int,
-    name varchar(100),
+    name varchar
+    (100),
     id varchar(100),
     regdate datetime
     );

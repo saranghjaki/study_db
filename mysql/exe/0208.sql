@@ -810,10 +810,10 @@ INSERT INTO `nct`.`infememberhobby`
 `ifmmSeq`)
 VALUES
 (
-2
+3
+,3
+,1
 ,2
-,1
-,1
 ,1
 ,now()
 ,now()
@@ -923,14 +923,14 @@ INSERT INTO `nct`.`infememberjoinqna`
 `ifmmSeq`)
 VALUES
 (
-3
-,'홍길동'
+2
+,'김땡땡'
 ,1
 ,now()
 ,now()
 ,now()
 ,now()
-,2
+,3
 );
 
 INSERT INTO `nct`.`infememberaddress`
@@ -949,12 +949,12 @@ INSERT INTO `nct`.`infememberaddress`
 `ifmmSeq`)
 VALUES
 (
-1
-,1
-,'집'
-,'강원도 원주시 '
-,'한빛아파트 304'
-,65432
+0
+,2
+,'친구네'
+,'경상남도 창원시 '
+,'빛마을 11호'
+,6555
 ,1
 ,now()
 ,now()
@@ -969,41 +969,141 @@ select * from infememberaddressonline;
 select * from infememberemail;
 select * from infememberhobby;
 select * from infememberjoinqna;
-select * from infememberphone;
 select * from infrcode;
 select * from infrcodegroup;
 select * from infrmember;
+ 
+   update infrmember set
+	ifmmPassword='318aee3fed8c9d040d35a7fc1fa776fb31303833aa2de885354ddf3d44d8fb69'
+   
+      where 1=1 
+ and ifmmSeq= 3;
+ 
+ 
+ select
+ a.ifcgSeq
+ ,a.ifcgName
+ ,b.ifcdSeq
+ ,b.ifcdName
+ ,b.ifcgUseNy
+ ,b.ifcgOrder
+ ,b.ifcdDelNy 
+ from infrcodegroup as a
+	left join infrcode as b on b.ifcgSeq =a.ifcgSeq
+    where 1=1
+    
+    and a.ifcgUseNy=1
+    and b.ifcgUseNy=1
+
+    order by
+    a.ifcgSeq asc
+    ,b.ifcgOrder desc;
+ 
+ -- 관리자 화면과 사용자 화면 이 다르다 관리자 화면 호출시 추가
+	select count(*)
+    where 1=1
+    and infrAdminNy =1
+    and ifnmId =''
+    and ifnmPassword =''
+    ;
 
      select
       a.ifmmSeq
-	  ,a.ifmmAdminNy
+      ,a.ifmmAdminNy
       ,a.ifmmName
       ,a.ifmmId
-      ,a.ifmmGenderCd
-      ,(select ifcdName  from infrcode as c where 1=1 and infrCodeGroup_ifcgSeq=2 and ifcgOrder=a.ifmmSeq)as type
+      ,a.ifmmPassword
+       ,(select ifcdName  from infrcode as c where 1=1 and ifcgSeq=2 and ifcgOrder=a.ifmmSeq)as type
       ,a.ifmmDob
-      ,a.ifmmSaveCd
-      ,(select ifcdName  from infrcode as c where 1=1 and infrCodeGroup_ifcgSeq=3 and ifcgOrder=a.ifmmSeq)as type
-      ,a.ifmmMarriageCd
-      ,(select ifcdName  from infrcode as c where 1=1 and infrCodeGroup_ifcgSeq=4 and ifcgOrder=a.ifmmSeq)as type
-      ,a.ifmmMarriageCd
-      ,(select ifcdName  from infrcode as c where 1=1 and infrCodeGroup_ifcgSeq=5 and ifcgOrder=a.ifmmSeq)as type
-	  ,b.ifmpTypeCd
-      ,(select ifcdName  from infrcode as c where 1=1 and infrCodeGroup_ifcgSeq=7 and ifcgOrder=b.ifmmSeq)as type
-      ,b.ifmpDeviceCd
-      ,(select ifcdName  from infrcode as c where 1=1 and infrCodeGroup_ifcgSeq=8 and ifcgOrder=b.ifmmSeq)as type
-      ,b.ifmpTelecomCd
-      ,(select ifcdName  from infrcode as c where 1=1 and infrCodeGroup_ifcgSeq=9 and ifcgOrder=b.ifmmSeq)as type
+	,(select ifcdName  from infrcode as c where 1=1 and ifcgSeq=3 and ifcgOrder=a.ifmmSeq)as type
+      ,(select ifcdName  from infrcode as c where 1=1 and ifcgSeq=4 and ifcgOrder=a.ifmmSeq)as type
+      ,(select ifcdName  from infrcode as c where 1=1 and ifcgSeq=5 and ifcgOrder=a.ifmmSeq)as type
+	   ,(select ifcdName  from infrcode as c where 1=1 and ifcgSeq=7 and ifcgOrder=b.ifmmSeq)as type
+	    ,(select ifcdName  from infrcode as c where 1=1 and ifcgSeq=8 and ifcgOrder=b.ifmmSeq)as type
+      ,(select ifcdName  from infrcode  as c where 1=1 and ifcgSeq=9 and ifcgOrder=b.ifmmSeq)as type
       ,b.ifmpNumber
-      ,d.ifmaTypeCd
-      ,(select ifcdName  from infrcode as c where 1=1 and infrCodeGroup_ifcgSeq=13 and ifcgOrder=b.ifmmSeq)as type
+      ,concat(substring(b.ifmpNumber,1,3),"-",substring(b.ifmpNumber,4,4),"-",substring(b.ifmpNumber,7,4))as phoneNumber
+      ,(select ifcdName  from infrcode as c where 1=1 and ifcgSeq=13 and ifcgOrder=b.ifmmSeq)as type
       ,d.ifmaTitle
       ,d.ifmaAddress1
       ,d.ifmaAddress2
       ,d.ifmaZipcode
-    from infrmember as a
+      ,(select ifcdName from infrcode as c where 1=1 and ifcgSeq=10 and ifcgOrder=b.ifmmSeq)as type
+      ,(select ifcdName from infrcode as c where 1=1 and ifcgSeq=11 and ifcgOrder=b.ifmmSeq)as type
+	 ,e.ifmaoUrl
+	 ,(select ifcdName from infrcode as c where 1=1 and ifcgSeq=5 and ifcgOrder=b.ifmmSeq)as type
+	 ,f.ifmeEmailAccount
+	 ,(select ifcdName from infrcode as c where 1=1 and ifcgSeq=6 and ifcgOrder=b.ifmmSeq)as domain
+     ,(select ifcdName from infrcode as c where 1=1 and ifcgSeq=12 and ifcgOrder=b.ifmmSeq)as hobby
+     ,(select ifcdName from infrcode as c where 1=1 and ifcgSeq=14 and ifcgOrder=b.ifmmSeq)as QnA
+     ,h.ifjqAnswer
+    ,(select ifnaName from infrnationality as j where 1=1 and  j.ifnaSeq=i.ifnaSeq)as nationality
+       from infrmember as a
     left join infememberphone as b on b.ifmmSeq= a.ifmmSeq
-     left join infememberaddress as d on d.ifmmSeq= a.ifmmSeq   
-   ;
+     left join infememberaddress as d on d.ifmmSeq= a.ifmmSeq 
+       left join infememberaddressonline as e on e.ifmmSeq= a.ifmmSeq 
+        left join infememberemail as f on f.ifmmSeq= a.ifmmSeq 
+         left join infememberhobby as g on g.ifmmSeq= a.ifmmSeq 
+          left join  infememberjoinqna as h on h.ifmmSeq= a.ifmmSeq 
+          left join  infrmembernationality as i on i.ifmmSeq= a.ifmmSeq 
+			 left join  infrnationality as j on j.ifnaSeq= i.ifnaSeq
+         where 1=1 
+          order by
+          a.ifmmSeq asc 
+         ;
 		
+ select * from infememberphone;
+select * from infememberaddress;
+select * from infememberaddressonline;
+select * from infememberemail;
+select * from infememberhobby;
+select * from infememberjoinqna;
+select * from infrcode;
+select * from infrcodegroup;
+select * from infrmember;
+select * from infrmembernationality;
+select * from infrnationality;
+
+
+ alter table infeMemberHobby modify ifmhHobbyTypeCd BIGINT;
+ alter table infrMember modify ifmmGenderCd BIGINT;
+alter table infrMember modify ifmmSaveCd BIGINT;
+alter table infrMember modify ifmmMarriageCd BIGINT;
+ alter table infeMemberEmail modify ifmeTypeCd  BIGINT;
+  alter table infeMemberEmail modify ifmeEmailDomainCd BIGINT;
+   alter table infeMemberPhone modify ifmpTypeCd  BIGINT;
+ alter table infeMemberPhone modify ifmpDeviceCd  BIGINT;
+ alter table infeMemberPhone modify ifmpTelecomCd  BIGINT;
+  alter table infrAuthMenu modify  ifauRoleCd BIGINT;
+   alter table infeMemberAddressOnline modify ifmaoTypeCd BIGINT;
+    alter table infeMemberAddressOnline modify ifmaoSnsTypeCd BIGINT;
+alter table infeMemberAddress modify ifmaTypeCd BIGINT;
+alter table infeMemberJoinQna modifY ifjqQuestionCd BIGINT;
+
+alter table infrcode
+rename column infrCodeGroup_ifcgSeq to ifcgSeq;
+
+INSERT INTO `nct`.`infrmembernationality`
+(`ifmnaDelNy`,
+`ifmnDefaultNy`,
+`regDatatime`,
+`regDatatimeSvr`,
+`modDatatime`,
+`modDatatimeSvr`,
+`ifnaOrderNy`,
+`ifnaSeq`,
+`ifmmSeq`)
+VALUES
+(
+0
+,1
+,now()
+,now()
+,now()
+,now()
+,1
+,2
+,3
+);
+
 

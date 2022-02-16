@@ -63,6 +63,14 @@ truncate yscode;
   where 1=1
 	and yscgSeq = 4;
     
+    -- 데이터정렬
+ order by 
+ a.컬럼 asc(내림차순) desc(오름차순)
+ a.컴럼
+ 
+ -- 조건
+ where 1=1
+ and a.컬럼 =1 (조건)
  
  -- 회원가입폼 
  
